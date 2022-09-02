@@ -96,3 +96,5 @@ loop do
   answer = gets.chomp
   break if answer.downcase.start_with?("n")
 end
+
+puts "Thank you for using the loan repayment calculator! Goodbye."
