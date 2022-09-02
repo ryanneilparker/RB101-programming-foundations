@@ -5,23 +5,23 @@
 # displays the result
 
 def plus (num1, num2)
-  return num1 + num2
+  return num1.to_i + num2.to_i
 end
 
 def minus (num1, num2)
-  return num1 - num2
+  return num1.to_i - num2.to_i
 end
 
 def multiply (num1, num2)
-  return num1 * num2
+  return num1.to_i * num2.to_i
 end
 
 def divide (num1, num2)
-  return num1 / num2
+  return num1.to_f / num2.to_f
 end
 
 def valid_number? (number)
-  number != 0
+  return Integer(number) rescue false
 end
 
 def valid_operator?(operator)
@@ -34,7 +34,7 @@ loop do
   num1 = ''
   loop do
     puts "Please enter a valid number:"
-    num1 = gets.chomp.to_i
+    num1 = gets.chomp
     break if valid_number?(num1)
   end
 
@@ -48,7 +48,7 @@ loop do
   num2 = ''
   loop do
     puts "Please enter another number:"
-    num2 = gets.chomp.to_i
+    num2 = gets.chomp
     break if valid_number?(num2)
   end
 
