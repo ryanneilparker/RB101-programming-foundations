@@ -1,0 +1,7 @@
+welcome: "Welcome to the loan repayment calculator! \n -------------------------------------"
+principle: "Enter the principle amount in dollars:"
+apr: "Enter the annual percentage rate as a number:"
+duration: "Enter the loan duration in years:"
+error: "Woops, that doesn't look like a valid input, please try again."
+calculating: "Calculating ..."
+restart: "Would you like to calculate payments for another loan (y/n)?"
