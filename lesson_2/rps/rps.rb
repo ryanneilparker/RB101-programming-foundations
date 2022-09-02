@@ -22,7 +22,7 @@ def display_results(player, computer)
   end
 end
 
-score = [0,0]
+score = [0, 0]
 def update_score(score, player, computer)
   if win?(player, computer)
     score[0] += 1
