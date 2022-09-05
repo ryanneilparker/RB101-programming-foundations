@@ -2,8 +2,7 @@
 
 def digit_list(integer)
   digits = integer.to_s.chars
-  digits.map! {|digit| digit.to_i}
-  digits
+  digits.map {|digit| digit.to_i}
 end
 
 
