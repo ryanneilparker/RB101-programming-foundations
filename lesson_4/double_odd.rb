@@ -6,9 +6,7 @@ def double_odd_index_numbers(numbers)
     break if counter == numbers.size
 
     current_number = numbers[counter]
-
     current_number *= 2 if counter.odd?
-
     result_numbers << current_number
 
     counter += 1
