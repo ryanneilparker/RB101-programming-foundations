@@ -18,7 +18,7 @@ end
 letters.flatten!
 p letters
 
-# Add letters to result if they are vowels
+# Lop through letters and extract vowels
 vowels = []
 letters.each do |letter|
   vowels << letter if letter =~ /[aeiou]/
