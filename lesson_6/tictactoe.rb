@@ -57,10 +57,18 @@ end
 
 def computer_turn!(brd)
   square = nil
+
   LINES.each do |line|
-    square = find_at_risk_square(line, brd)
+    square = find_at_risk_square(line, brd, COMPUTER)
     break if square
   end
+
+  LINES.each do |line|
+    square = find_at_risk_square(line, brd, PLAYER)
+    break if square
+  end
+
+  sqaure = 5 if brd[5] == EMPTY
 
   if !square
     square = valid_choices(brd).sample
@@ -107,8 +115,8 @@ def update_score!(winner, scores)
   end
 end
 
-def find_at_risk_square(line, board)
-  if board.values_at(*line).count('PLAYER') == 2
+def find_at_risk_square(line, board, marker)
+  if board.values_at(*line).count(marker) == 2
     board.select{|k,v| line.include?(k) && v == 'EMPTY'}.keys.first
   else
     nil
