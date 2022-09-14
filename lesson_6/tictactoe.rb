@@ -45,7 +45,7 @@ def player_turn!(board_state)
   choice = ''
 
   loop do
-    prompt "Choose a square (#{valid_choices(board_state).join(',')}):"
+    prompt "Choose a square: #{joinor(valid_choices(board_state))}"
     choice = gets.chomp.to_i
     break if valid_choices(board_state).include?(choice)
     prompt "Invalid choice! Please try again."
@@ -76,6 +76,17 @@ end
 
 def someone_won?(board_state)
   !!winner(board_state)
+end
+
+def joinor(arr, delimiter=', ', word='or')
+  case arr.size
+  when 0 then ''
+  when 1 then arr.first
+  when 2 then arr.join(" #{word} ")
+  else
+    arr[-1] = "#{word} #{arr.last}"
+    arr.join(delimiter)
+  end
 end
 
 loop do
