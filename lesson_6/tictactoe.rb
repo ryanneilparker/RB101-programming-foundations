@@ -55,9 +55,18 @@ def player_turn!(board_state)
   board_state[choice] = PLAYER
 end
 
-def computer_turn!(board_state)
-  choice = valid_choices(board_state).sample
-  board_state[choice] = COMPUTER
+def computer_turn!(brd)
+  square = nil
+  LINES.each do |line|
+    square = find_at_risk_square(line, brd)
+    break if square
+  end
+
+  if !square
+    square = valid_choices(brd).sample
+  end
+
+  brd[square] = COMPUTER
 end
 
 def winner(board_state)
@@ -95,6 +104,14 @@ def update_score!(winner, scores)
     scores[0] += 1
   elsif winner == "Computer"
     scores[1] += 1
+  end
+end
+
+def find_at_risk_square(line, board)
+  if board.values_at(*line).count('PLAYER') == 2
+    board.select{|k,v| line.include?(k) && v == 'EMPTY'}.keys.first
+  else
+    nil
   end
 end
 
