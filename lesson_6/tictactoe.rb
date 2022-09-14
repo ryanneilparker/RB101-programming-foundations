@@ -18,9 +18,10 @@ def initialize_board_state
 end
 
 # rubocop:disable Metrics/AbcSize
-def display_board(state)
+def display_board(state, scores)
   system('clear')
   puts "Player: #{PLAYER}, Computer: #{COMPUTER}"
+  puts "Score: #{scores[0]}, Score: #{scores[1]}"
   puts "+-----+-----+-----+"
   puts "|     |     |     |"
   puts "|  #{state[1]}  |  #{state[2]}  |  #{state[3]}  |"
@@ -89,20 +90,30 @@ def joinor(arr, delimiter=', ', word='or')
   end
 end
 
+def update_score!(winner, scores)
+  if winner == 'Player'
+    scores[0] += 1
+  elsif winner == "Computer"
+    scores[1] += 1
+  end
+end
+
+
+scores = [0, 0]
 loop do
   # 1 Display the initial empty 3x3 board.
   board = initialize_board_state
-  display_board(board)
+  display_board(board, scores)
 
   loop do
     # 2 Ask the user to mark a square.
     player_turn!(board)
-    display_board(board)
+    display_board(board, scores)
     break if someone_won?(board) || board_full?(board)
 
     # 3 Computer marks a square.
     computer_turn!(board)
-    display_board(board)
+    display_board(board, scores)
     break if someone_won?(board) || board_full?(board)
   end
 
@@ -113,10 +124,17 @@ loop do
     prompt "It's a tie!"
   end
 
-  # 5 Play again?
-  prompt "Play again (y or n)"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  # 5 Update scores
+  update_score!(winner(board), scores)
+  display_board(board, scores)
+
+  if scores[0] == 5 || scores[1] == 5
+    # 5 Play again?
+    scores[0] == 5 ? (prompt "Player is the grand winner!") : (prompt "Computer is the grand winner!")
+    prompt "Play again (y or n)"
+    answer = gets.chomp
+    break unless answer.downcase.start_with?('y')
+  end
 end
 
 prompt "Thanks for playing! Goodbye."
