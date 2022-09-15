@@ -85,7 +85,7 @@ def score(cards)
   elsif cards.any?('ace') && score <= 10
     score += 11
   end
- 
+
   score
 end
 
@@ -103,7 +103,7 @@ loop do
   2.times { deal_card!(cards, player_cards) }
   2.times { deal_card!(cards, dealer_cards) }
   display_dealer_cards(dealer_cards)
-  
+
   # player turn loop
   loop do
     display_player_cards(player_cards)
@@ -132,9 +132,11 @@ loop do
   # display winner
   message(who_won(player_cards, dealer_cards))
   sleep 0.5
-  message("Dealer had #{dealer_cards.join(', ')} worth #{score(dealer_cards)} points.")
+  message("Dealer had #{dealer_cards.join(', ')}
+          worth #{score(dealer_cards)} points.")
   sleep 0.5
-  message("You had #{player_cards.join(', ')} worth #{score(player_cards)} points.")
+  message("You had #{player_cards.join(', ')}
+          worth #{score(player_cards)} points.")
   sleep 0.5
 
   # play again?
