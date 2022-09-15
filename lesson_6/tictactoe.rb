@@ -1,4 +1,5 @@
 # Tic Tac Toe
+require 'pry'
 
 # rubocop:disable Layout/LineLength
 EMPTY = ' '
@@ -66,6 +67,7 @@ def computer_turn!(brd)
   LINES.each do |line|
     square = find_at_risk_square(line, brd, PLAYER)
     break if square
+    binding.pry
   end
 
   sqaure = 5 if brd[5] == EMPTY
