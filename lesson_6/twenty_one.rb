@@ -11,8 +11,17 @@
 =end
 require 'pry'
 
-def prompt(msg)
-  puts "=> #{msg}"
+ROYALS = %w(jack queen king)
+TIE = "It's a tie..."
+LOSE = "You lose..."
+WIN = "You win!"
+
+def prompt(prompt)
+  puts "=> #{prompt}"
+end
+
+def message(msg)
+  puts "\n >> #{msg} \n\n"
 end
 
 def initialize_deck
@@ -33,7 +42,7 @@ def display_dealer_cards(dealer_cards)
 end
 
 def display_player_cards(player_cards)
-  puts "You have #{player_cards}."
+  puts "You have #{player_cards.join(', ')}."
 end
 
 def choice_valid?(input)
@@ -41,47 +50,62 @@ def choice_valid?(input)
 end
 
 def busted?(user_cards)
-  user_cards.sum > 21
+  score(user_cards) > 21
 end
 
 def who_won(player, dealer)
-  if busted?(player) && busted?(dealer)
-    "It's a tie!"
-  elsif busted?(player) && !busted?(dealer)
-    "You lose..."
-  elsif !busted?(player) && busted?(dealer)
-    "You win!"
-  else
-    "You win!" if (player.sum - 21) < (dealer.sum - 21)
-    "You lose..." if (dealer.sum - 21) < (player.sum - 21)
+  if score(player) > score(dealer) && !busted?(player)
+    WIN
+  elsif score(player) < 21 && busted?(dealer)
+    WIN
+  elsif score(player) == score(dealer)
+    TIE
+  elsif busted?(player) && busted?(dealer)
+    TIE
+  elsif score(dealer) > score(player) && !busted?(dealer)
+    LOSE
+  elsif score(dealer) < 21 && busted?(player)
+    LOSE
   end
 end
 
 def score(cards)
-  score = 0 
-  cards.each do |card|
-    if %w(king queen jack).include?(card)
-      score += 10
-    elsif card == 'ace'
-      score +=
+  score = 0
 
+  cards.each do |card|
+    if ROYALS.include?(card)
+      score += 10
+    elsif card.is_a? Integer
+      score += card
+    end
+  end
+
+  if cards.any?('ace') && score > 10
+    score += cards.count('ace')
+  elsif cards.any?('ace') && score <= 10
+    score += 11
+  end
+ 
+  score
+end
+
+puts "Welcome to 21!"
 # main game loop
 loop do
   # initialize game
   cards = initialize_deck
   player_cards = []
   dealer_cards = []
-  puts "Welcome to 21!"
 
   # deal cards
-  puts "Dealing..."
+  message("Dealing...")
   sleep 2
   2.times { deal_card!(cards, player_cards) }
   2.times { deal_card!(cards, dealer_cards) }
+  display_dealer_cards(dealer_cards)
   
   # player turn loop
   loop do
-    display_dealer_cards(dealer_cards)
     display_player_cards(player_cards)
 
     # input validation loop
@@ -90,7 +114,7 @@ loop do
       prompt "Hit or Stay?"
       choice = gets.chomp
       break if choice_valid?(choice)
-      puts "That's not a valid answer..."
+      message("That's not a valid answer...")
     end
 
     break if choice.downcase == "stay" || busted?(player_cards)
@@ -100,16 +124,23 @@ loop do
 
   # dealer turn loop
   loop do
-    break if dealer_cards.sum >= 17
+    break if score(dealer_cards) > 17
     deal_card!(cards, dealer_cards)
     break if busted?(dealer_cards)
   end
 
   # display winner
-  puts who_won(player_cards, dealer_cards)
+  message(who_won(player_cards, dealer_cards))
+  sleep 0.5
+  message("Dealer had #{dealer_cards.join(', ')} worth #{score(dealer_cards)} points.")
+  sleep 0.5
+  message("You had #{player_cards.join(', ')} worth #{score(player_cards)} points.")
+  sleep 0.5
 
   # play again?
-  prompt "Do you want to play again?"
+  prompt "Do you want to play again (y/n)?"
   answer = gets.chomp
-
+  break unless answer.downcase.start_with?('y')
 end
+
+puts "Thanks for playing 21! See you next time!"
