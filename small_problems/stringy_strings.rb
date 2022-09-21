@@ -21,13 +21,20 @@
       # insert '0' into string
   # return string
 
-def stringy(int)
+def stringy(int, start = 1)
   indices = 0..(int-1)
   string = ''
 
-  indices.each do |index|
-    string << '1' if index.even?
-    string << '0' if index.odd?
+  if start == 1
+    indices.each do |index|
+      string << '1' if index.even?
+      string << '0' if index.odd?
+    end
+  elsif start == 0
+    indices.each do |index|
+      string << '0' if index.even?
+      string << '1' if index.odd?
+    end
   end
 
   string
