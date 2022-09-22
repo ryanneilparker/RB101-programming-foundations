@@ -28,4 +28,4 @@ end
 puts "Please enter one or more words:"
 string = gets.chomp
 
-puts "There are #{char_count(string)} characters in #{string}!"
+puts "There are #{char_count(string)} characters in '#{string}'!"
