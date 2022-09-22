@@ -3,8 +3,11 @@ Write a method that takes a String of digits,
 and returns the appropriate number as an integer. 
 You may not use any of the methods mentioned above.
 
-For now, do not worry about leading + or - signs, 
-nor should you worry about invalid characters; 
+The String may have a leading + or - sign; 
+if the first character is a +, your method should return a positive number; 
+if it is a -, your method should return a negative number. 
+If no sign is given, you should return a positive number. 
+dont worry about invalid characters; 
 assume all characters will be numeric.
 
 You may not use any of the standard conversion methods available in Ruby to convert a string to a number, 
@@ -49,6 +52,8 @@ return integer
 def string_to_integer(string)
   chars = string.chars
 
+  sign = chars.shift if chars[0] == '+' || chars[0] == '-'
+
   nums = []
 
   chars.each do |char|
@@ -80,9 +85,16 @@ def string_to_integer(string)
     nums[index] = num * 10 ** (nums.size - (1 + index))
   end
 
-  nums.sum
+  if sign == '-'
+    -1 * nums.sum
+  else
+    nums.sum
+  end
 end
 
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570
+p string_to_integer('4321') == 4321
+p string_to_integer('-570') == -570
+p string_to_integer('+100') == 100
   
