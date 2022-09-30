@@ -9,8 +9,8 @@ you should only have one space in the result
 (the result should never have consecutive spaces).
 
 PROBLEM
-inputs: string
-outputs: string
+inputs: lowercase string
+outputs: lowercase string
 requirements: remove non-alphanumeric chars, replace any number of them with only 1 space
 
 DATA
