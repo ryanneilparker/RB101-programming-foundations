@@ -32,11 +32,14 @@ def generate_layer(fill, size)
 end
 
 def triangle(size)
+  fill = 1
   size.times do 
-
+    puts generate_layer(fill, size)
+    fill += 1
+  end
 end
 
-p generate_layer(2, 3)
+p triangle(5)
 
 
 
