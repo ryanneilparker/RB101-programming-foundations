@@ -31,6 +31,7 @@ loop over array until sorted,
 compare each pair of elements,
 if unordered,
 swap.
+end once no more swaps
 
 PSEUDO
 n = arr.size
