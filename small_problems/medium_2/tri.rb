@@ -53,7 +53,7 @@ def triangle(s1, s2, s3)
 
   return :equilateral if side[0] == side[1] && side[1] == side[2]
 
-  return :isosceles if side[0] == side[1] || side[1] == side[2]
+  return :isosceles if side[0] == side[1] || side[1] == side[2] || side[0] == side[2]
 
   return :scalene
 end
